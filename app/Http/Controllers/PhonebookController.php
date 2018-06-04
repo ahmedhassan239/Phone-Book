@@ -41,6 +41,7 @@ class PhonebookController extends Controller
         $phonebook->phone = $request->phone;
         $phonebook->email = $request->email;
         $phonebook->save();
+        return $phonebook;
     }
 
     /**

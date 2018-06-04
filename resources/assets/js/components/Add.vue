@@ -39,7 +39,7 @@
 	</div>
 </template>
 
-<script type="text/javascript">
+<script>
 	export default{
 		props:['openmodal'],
 		data(){
@@ -54,13 +54,22 @@
 		},
 		methods:{
 			close(){
-				this.$emit('closeRequest');
+				this.$emit('closeRequest')
 			},
 			save(){
-				axios.post('/phonebook',this.$data.list).then((response) => this.close())
-			  
-			  	.catch((error) =>this.errors = error.response.data.errors)
-			  
+				axios.post('/phonebook',this.$data.list).then((response)=> {
+					this.close()
+					this.$parent.lists.push(response.data)
+					this.$parent.lists.sort(function(a,b){
+						if (a.name > b.name) {
+							return 1;
+						}else if(a.name < b.name){
+							return -1;
+						}
+					})
+					this.list = ""
+				})
+				  .catch((error) => this.errors = error.response.data.errors)
 			}
 		}
 	}

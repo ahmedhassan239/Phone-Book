@@ -24,9 +24,9 @@ class PhonebookRequest extends FormRequest
     public function rules(Request $request)
     {
         return [
-            'name'  => 'required|max:255',
-            'phone' => 'required|integer',
-            'email' => 'required|email|unique:phonebooks,email,'.$request->id,
+            'name' => 'required|max:255',
+            'phone'=> 'required|max:10',
+            'email'=> 'required|email|unique:phonebooks,email,'.$request->id
         ];
     }
 }
