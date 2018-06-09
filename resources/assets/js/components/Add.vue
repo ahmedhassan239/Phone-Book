@@ -44,7 +44,7 @@
 		props:['openmodal'],
 		data(){
 			return{
-				list:{
+				list: {
 					name:'',
 					phone:'',
 					email:''
@@ -57,19 +57,26 @@
 				this.$emit('closeRequest')
 			},
 			save(){
+				console.log(this.$data.list);
+				var component = this;
+
 				axios.post('/phonebook',this.$data.list).then((response)=> {
-					this.close()
-					this.$parent.lists.push(response.data)
-					this.$parent.lists.sort(function(a,b){
+					component.close()
+					component.$parent.lists.push(response.data)
+					component.$parent.lists.sort(function(a,b){
 						if (a.name > b.name) {
 							return 1;
 						}else if(a.name < b.name){
 							return -1;
 						}
 					})
-					this.list = ""
+					component.list = {
+						name:'',
+						phone:'',
+						email:''
+					}
 				})
-				  .catch((error) => this.errors = error.response.data.errors)
+				.catch((error) => component.errors = error.response.data.errors)
 			}
 		}
 	}
